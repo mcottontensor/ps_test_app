@@ -1,0 +1,85 @@
+name: Package Test App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: [self-hosted, windows]
+    environment: dev
+    env:
+      UE_PATH: "D:\\p4\\Release-5.3"
+      OUT_PATH: "${{ github.workspace }}\\..\\Output"
+      LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
+    steps:
+      - name: "Checkout GitHub Action - TestApp"
+        uses: actions/checkout@v3
+        with:
+          clean: "false"
+      - name: "Remove existing artifacts"
+        run: |
+          if (Test-Path ${{ env.OUT_PATH }}) { Remove-Item -Recurse -Force ${{ env.OUT_PATH }} }
+      - name: Read the project version
+        id: getversion
+        run: |
+          echo "version=$(BuildTools\GetProjectVersion.ps1)" >> $env:GITHUB_OUTPUT
+      - name: "Build TensorConfigurator Development"
+        run: >
+          cmd /c 'set uebp_EngineSavedFolder=${{ env.LOG_PATH }}&&
+          set uebp_LogFolder=${{ env.LOG_PATH }}&&
+          "${{ env.UE_PATH }}\Engine\Build\BatchFiles\RunUAT.bat"
+          BuildCookRun
+          -project="${{ github.workspace }}\TestApp.uproject"
+          -build
+          -cook
+          -stage
+          -archive
+          -archivedirectory="${{ env.OUT_PATH }}\\Development"
+          -package
+          -pak
+          -targetplatform=Linux
+          -target=TestApp
+          -clientconfig=Development
+          -nop4'
+      - name: "Build TestApp Shipping"
+        run: >
+          cmd /c 'set uebp_EngineSavedFolder=${{ env.LOG_PATH }}&&
+          set uebp_LogFolder=${{ env.LOG_PATH }}&&
+          "${{ env.UE_PATH }}\Engine\Build\BatchFiles\RunUAT.bat"
+          BuildCookRun
+          -project="${{ github.workspace }}\TestApp.uproject"
+          -build
+          -cook
+          -stage
+          -archive
+          -archivedirectory="${{ env.OUT_PATH }}\\Shipping"
+          -package
+          -pak
+          -targetplatform=Linux
+          -target=TestApp
+          -clientconfig=Shipping
+          -nodebuginfo
+          -nop4'
+      - name: Archive Debug .zip
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          directory: '${{ env.OUT_PATH }}/Development'
+          path: 'Windows'
+          type: 'tar.gz'
+          filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.zip'
+          exclusions: ''
+      - name: Archive Shipping .zip
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          directory: '${{ env.OUT_PATH }}/Shipping'
+          path: 'Windows'
+          type: 'tar.gz'
+          filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.zip'
+          exclusions: ''
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
+          artifacts: "${{ env.OUT_PATH }}/Development/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Win64-Development.zip, ${{ env.OUT_PATH }}/Shipping/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true
