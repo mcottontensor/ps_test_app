@@ -67,10 +67,7 @@ jobs:
           cwd: '${{ env.OUT_PATH }}/Development'
           files: |
             Linux
-          outPath: '${{ env.OUT_PATH }}'
-          type: 'zip'
-          filename: 'FFS-Linux-Development.zip'
-          exclusions: ''
+          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.tar.gz'
       - name: Archive Shipping .zip
         uses: a7ul/tar-action@v1.1.0
         with:
@@ -78,10 +75,7 @@ jobs:
           cwd: '${{ env.OUT_PATH }}/Shipping'
           files: |
             Linux
-          outPath: '${{ env.OUT_PATH }}'
-          type: 'zip'
-          filename: 'FFS-Linux-Shipping.zip'
-          exclusions: ''
+          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
