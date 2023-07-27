@@ -5,6 +5,7 @@ on:
 
 jobs:
   package:
+    permissions: write-all
     runs-on: [self-hosted, windows]
     environment: dev
     env:
