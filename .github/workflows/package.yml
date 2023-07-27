@@ -65,7 +65,7 @@ jobs:
         with:
           directory: '${{ env.OUT_PATH }}/Development'
           path: 'Linux'
-          type: 'tar.gz'
+          type: 'zip'
           filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.zip'
           exclusions: ''
       - name: Archive Shipping .zip
@@ -73,7 +73,7 @@ jobs:
         with:
           directory: '${{ env.OUT_PATH }}/Shipping'
           path: 'Linux'
-          type: 'tar.gz'
+          type: 'zip'
           filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.zip'
           exclusions: ''
       - name: "Make the release"
