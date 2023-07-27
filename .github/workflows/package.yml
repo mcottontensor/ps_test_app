@@ -66,7 +66,7 @@ jobs:
           directory: '${{ env.OUT_PATH }}/Development'
           path: 'Linux'
           type: 'zip'
-          filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.zip'
+          filename: 'FFS-Linux-Development.zip'
           exclusions: ''
       - name: Archive Shipping .zip
         uses: thedoctor0/zip-release@0.7.1
@@ -74,7 +74,7 @@ jobs:
           directory: '${{ env.OUT_PATH }}/Shipping'
           path: 'Linux'
           type: 'zip'
-          filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.zip'
+          filename: 'FFS-Linux.zip'
           exclusions: ''
       - name: "Make the release"
         uses: ncipollo/release-action@v1
