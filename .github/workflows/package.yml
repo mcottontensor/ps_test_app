@@ -61,20 +61,26 @@ jobs:
           -nodebuginfo
           -nop4'
       - name: Archive Debug .zip
-        uses: thedoctor0/zip-release@0.7.1
+        uses: a7ul/tar-action@v1.1.0
         with:
-          directory: '${{ env.OUT_PATH }}/Development'
-          path: 'Linux'
+          command: c
+          cwd: '${{ env.OUT_PATH }}/Development'
+          files: |
+            Linux
+          outPath: '${{ env.OUT_PATH }}'
           type: 'zip'
           filename: 'FFS-Linux-Development.zip'
           exclusions: ''
       - name: Archive Shipping .zip
-        uses: thedoctor0/zip-release@0.7.1
+        uses: a7ul/tar-action@v1.1.0
         with:
-          directory: '${{ env.OUT_PATH }}/Shipping'
-          path: 'Linux'
+          command: c
+          cwd: '${{ env.OUT_PATH }}/Shipping'
+          files: |
+            Linux
+          outPath: '${{ env.OUT_PATH }}'
           type: 'zip'
-          filename: 'FFS-Linux.zip'
+          filename: 'FFS-Linux-Shipping.zip'
           exclusions: ''
       - name: "Make the release"
         uses: ncipollo/release-action@v1
