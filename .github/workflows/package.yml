@@ -80,6 +80,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
-          artifacts: "${{ env.OUT_PATH }}/Development/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.zip, ${{ env.OUT_PATH }}/Shipping/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
+          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.tar.gz, ${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
