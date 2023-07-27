@@ -1,0 +1,38 @@
+---
+- name: Deploy Streaming App
+  hosts: aws-streamer
+  become: false
+  vars:
+    archivename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
+  tasks: 
+    - name: Copy Application
+      copy:
+        src: '../../Output/${{ archivename }}'
+        dest: '/home/ubuntu/'
+      register: apparchive
+    - name: Extract Application
+      unarchive:
+        src: '/home/ubuntu/${{ archivename }}'
+        dest: '/home/ubuntu/'
+        remote_src: true
+      when: apparchive.changed
+    - name: Make startup script executable
+      file:
+        path: '/home/ubuntu/Linux/TestApp.sh'
+        mode: '0775'
+        owner: ubuntu
+        group: ubuntu
+      when: apparchive.changed
+    - name: Fetch PixelStreamingInfrastructure
+      git:
+        repo: 'https://github.com/EpicGames/PixelStreamingInfrastructure.git'
+        dest: '/home/ubuntu/PixelStreamingInfrastructure'
+        version: UE5.3
+        force: true
+      register: infrarepo
+    - name: Start signaling and streamer in tmux for usability
+      shell: |
+        tmux kill-session -t Streamer
+        tmux new-session -d -s Streamer -n Signaling -d "/usr/bin/env sh -c \"cd /home/ubuntu/PixelStreamingInfrastructure/SignallingWebServer;./platform_scripts/bash/Start_SignallingServer.sh\""
+        tmux new-window -t Streamer:1 -n Streamer "/usr/bin/env sh -c \"cd Linux;./TestApp.sh -pixelstreamingurl=ws://localhost:8888 -pixelstreamingnegotiatecodecs -renderoffscreen\""
+      when: apparchive.changed or infrarepo.changed

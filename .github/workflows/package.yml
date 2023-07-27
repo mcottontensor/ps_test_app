@@ -24,24 +24,6 @@ jobs:
         id: getversion
         run: |
           echo "version=$(BuildTools\GetProjectVersion.ps1)" >> $env:GITHUB_OUTPUT
-      - name: "Build TensorConfigurator Development"
-        run: >
-          cmd /c 'set uebp_EngineSavedFolder=${{ env.LOG_PATH }}&&
-          set uebp_LogFolder=${{ env.LOG_PATH }}&&
-          "${{ env.UE_PATH }}\Engine\Build\BatchFiles\RunUAT.bat"
-          BuildCookRun
-          -project="${{ github.workspace }}\TestApp.uproject"
-          -build
-          -cook
-          -stage
-          -archive
-          -archivedirectory="${{ env.OUT_PATH }}\\Development"
-          -package
-          -pak
-          -targetplatform=Linux
-          -target=TestApp
-          -clientconfig=Development
-          -nop4'
       - name: "Build TestApp Shipping"
         run: >
           cmd /c 'set uebp_EngineSavedFolder=${{ env.LOG_PATH }}&&
@@ -61,15 +43,7 @@ jobs:
           -clientconfig=Shipping
           -nodebuginfo
           -nop4'
-      - name: Archive Debug .zip
-        uses: a7ul/tar-action@v1.1.0
-        with:
-          command: c
-          cwd: '${{ env.OUT_PATH }}/Development'
-          files: |
-            Linux
-          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.tar.gz'
-      - name: Archive Shipping .zip
+      - name: Archive Shipping build
         uses: a7ul/tar-action@v1.1.0
         with:
           command: c
@@ -77,10 +51,24 @@ jobs:
           files: |
             Linux
           outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
-      - name: "Make the release"
-        uses: ncipollo/release-action@v1
+      - name: Run deploy playbook
+        uses: dawidd6/action-ansible-playbook@v2
         with:
-          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
-          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.tar.gz, ${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
-          generateReleaseNotes: true
-          allowUpdates: true
+          # Required, playbook filepath
+          playbook: 'deploy_playbook.yml'
+          # Optional, directory where playbooks live
+          directory: 'BuildTools/'
+          # Optional, SSH private key
+          key: ${{secrets.DEPLOY_SSH_PRIVATE_KEY}}
+          # Optional, literal inventory file contents
+          inventory: ${{secrets.DEPLOY_INVENTORY}}
+          # Optional, additional flags to pass to ansible-playbook
+          options: |
+            --u ubuntu
+      # - name: "Make the release"
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
+      #     artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.tar.gz, ${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
+      #     generateReleaseNotes: true
+      #     allowUpdates: true
