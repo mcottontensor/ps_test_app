@@ -64,7 +64,7 @@ jobs:
         uses: thedoctor0/zip-release@0.7.1
         with:
           directory: '${{ env.OUT_PATH }}/Development'
-          path: 'Windows'
+          path: 'Linux'
           type: 'tar.gz'
           filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.zip'
           exclusions: ''
@@ -72,7 +72,7 @@ jobs:
         uses: thedoctor0/zip-release@0.7.1
         with:
           directory: '${{ env.OUT_PATH }}/Shipping'
-          path: 'Windows'
+          path: 'Linux'
           type: 'tar.gz'
           filename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.zip'
           exclusions: ''
@@ -80,6 +80,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
-          artifacts: "${{ env.OUT_PATH }}/Development/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Win64-Development.zip, ${{ env.OUT_PATH }}/Shipping/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
+          artifacts: "${{ env.OUT_PATH }}/Development/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.zip, ${{ env.OUT_PATH }}/Shipping/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
