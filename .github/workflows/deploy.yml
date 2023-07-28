@@ -13,6 +13,10 @@ jobs:
       OUT_PATH: "${{ github.workspace }}\\..\\Output"
       LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
     steps:
+      - name: "Checkout GitHub Action - TestApp"
+        uses: actions/checkout@v3
+        with:
+          clean: "false"
       - name: Download Latest Release
         uses: robinraju/release-downloader@v1.8
         with: 
