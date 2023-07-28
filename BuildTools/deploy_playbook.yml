@@ -33,6 +33,7 @@
     - name: Start signaling and streamer in tmux for usability
       shell: |
         tmux kill-session -t Streamer
+        tmux start-server
         tmux new-session -d -s Streamer -n Signaling -d "/usr/bin/env sh -c \"cd /home/ubuntu/PixelStreamingInfrastructure/SignallingWebServer;./platform_scripts/bash/Start_SignallingServer.sh\""
         tmux new-window -t Streamer:1 -n Streamer "/usr/bin/env sh -c \"cd Linux;./TestApp.sh -pixelstreamingurl=ws://localhost:8888 -pixelstreamingnegotiatecodecs -renderoffscreen\""
       when: apparchive.changed or infrarepo.changed
