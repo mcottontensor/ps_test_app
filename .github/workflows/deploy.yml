@@ -18,12 +18,15 @@ jobs:
         with:
           clean: "false"
       - name: Download Latest Release
+        id: download
         uses: robinraju/release-downloader@v1.8
         with: 
           filename: "*"
           latest: true
           tarBall: true
           zipBall: false
+      - name: Rename deploy asset
+        run: mv ${{ fromJson(steps.download.outputs.downloaded_files)[0] }} deploy.tar.gz
       - name: Run deploy playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
