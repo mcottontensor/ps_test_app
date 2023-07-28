@@ -3,7 +3,7 @@
   hosts: aws-streamer
   become: false
   vars:
-    archivename: '${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
+    archivename: '*-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
   tasks: 
     - name: Copy Application
       copy:
