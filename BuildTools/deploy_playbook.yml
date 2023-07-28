@@ -7,7 +7,7 @@
   tasks: 
     - name: Copy Application
       copy:
-        src: '../../Output/{{ archivename }}'
+        src: '{{ archivename }}'
         dest: '/home/ubuntu/'
       register: apparchive
     - name: Extract Application
