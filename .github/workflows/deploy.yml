@@ -6,7 +6,7 @@ on:
 jobs:
   deploy:
     permissions: write-all
-    runs-on: [linux]
+    runs-on: [ubuntu-latest]
     environment: dev
     env:
       UE_PATH: "D:\\p4\\Release-5.3"
