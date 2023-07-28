@@ -7,12 +7,12 @@
   tasks: 
     - name: Copy Application
       copy:
-        src: '../../Output/${{ archivename }}'
+        src: '../../Output/{{ archivename }}'
         dest: '/home/ubuntu/'
       register: apparchive
     - name: Extract Application
       unarchive:
-        src: '/home/ubuntu/${{ archivename }}'
+        src: '/home/ubuntu/{{ archivename }}'
         dest: '/home/ubuntu/'
         remote_src: true
       when: apparchive.changed
