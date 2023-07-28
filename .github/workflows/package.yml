@@ -51,24 +51,10 @@ jobs:
           files: |
             Linux
           outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
-      - name: Run deploy playbook
-        uses: dawidd6/action-ansible-playbook@v2
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
         with:
-          # Required, playbook filepath
-          playbook: 'deploy_playbook.yml'
-          # Optional, directory where playbooks live
-          directory: 'BuildTools/'
-          # Optional, SSH private key
-          key: ${{secrets.DEPLOY_SSH_PRIVATE_KEY}}
-          # Optional, literal inventory file contents
-          inventory: ${{secrets.DEPLOY_INVENTORY}}
-          # Optional, additional flags to pass to ansible-playbook
-          options: |
-            --u ubuntu
-      # - name: "Make the release"
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
-      #     artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux-Development.tar.gz, ${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
-      #     generateReleaseNotes: true
-      #     allowUpdates: true
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
+          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true

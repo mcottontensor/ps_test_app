@@ -1,0 +1,36 @@
+name: Deploy Test App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    permissions: write-all
+    runs-on: [linux]
+    environment: dev
+    env:
+      UE_PATH: "D:\\p4\\Release-5.3"
+      OUT_PATH: "${{ github.workspace }}\\..\\Output"
+      LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
+    steps:
+      - name: Download Latest Release
+        uses: robinraju/release-downloader@v1.8
+        with: 
+          filename: "*"
+          latest: true
+          tarBall: true
+          zipBall: false
+      - name: Run deploy playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          # Required, playbook filepath
+          playbook: 'deploy_playbook.yml'
+          # Optional, directory where playbooks live
+          directory: 'BuildTools/'
+          # Optional, SSH private key
+          key: ${{secrets.DEPLOY_SSH_PRIVATE_KEY}}
+          # Optional, literal inventory file contents
+          inventory: ${{secrets.DEPLOY_INVENTORY}}
+          # Optional, additional flags to pass to ansible-playbook
+          options: |
+            --u ubuntu
