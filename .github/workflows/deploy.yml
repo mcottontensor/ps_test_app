@@ -2,6 +2,10 @@ name: Deploy Test App
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Package Test App"]
+    types:
+      - completed
 
 jobs:
   deploy:
