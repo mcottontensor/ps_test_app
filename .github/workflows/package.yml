@@ -6,7 +6,7 @@ on:
 jobs:
   package:
     permissions: write-all
-    runs-on: [self-hosted, windows, aws]
+    runs-on: [self-hosted, windows, home]
     environment: dev
     env:
       UE_PATH: "C:\\Program Files\\Epic Games\\UE_5.2"
