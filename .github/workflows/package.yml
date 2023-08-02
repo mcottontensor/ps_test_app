@@ -40,7 +40,7 @@ jobs:
           -pak
           -targetplatform=Linux
           -target=TestApp
-          -clientconfig=Shipping
+          -clientconfig=Development
           -nodebuginfo
           -nop4'
       - name: Archive Shipping build
