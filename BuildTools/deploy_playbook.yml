@@ -10,6 +10,11 @@
         src: '../{{ archivename }}'
         dest: '/home/ubuntu/'
       register: apparchive
+    - name: Remove old version
+      file:
+        path: '/home/ubuntu/Linux'
+        state: absent
+      when: apparchive.changed
     - name: Extract Application
       unarchive:
         src: '/home/ubuntu/{{ archivename }}'
