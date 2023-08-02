@@ -6,10 +6,10 @@ on:
 jobs:
   package:
     permissions: write-all
-    runs-on: [self-hosted, windows, main]
+    runs-on: [self-hosted, windows, aws]
     environment: dev
     env:
-      UE_PATH: "D:\\p4\\Release-5.2"
+      UE_PATH: "C:\\Program Files\\Epic Games\\UE_5.2"
       OUT_PATH: "${{ github.workspace }}\\..\\Output"
       LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
     steps:
