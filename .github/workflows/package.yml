@@ -9,7 +9,7 @@ jobs:
     runs-on: [self-hosted, windows, main]
     environment: dev
     env:
-      UE_PATH: "D:\p4\Release-5.2"
+      UE_PATH: "D:\\p4\\Release-5.2"
       OUT_PATH: "${{ github.workspace }}\\..\\Output"
       LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
     steps:
