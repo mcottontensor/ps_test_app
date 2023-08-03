@@ -10,6 +10,11 @@
         src: '../{{ archivename }}'
         dest: '/home/ubuntu/'
       register: apparchive
+    - name: Remove old version
+      file:
+        path: '/home/ubuntu/Linux'
+        state: absent
+      when: apparchive.changed
     - name: Extract Application
       unarchive:
         src: '/home/ubuntu/{{ archivename }}'
@@ -36,4 +41,3 @@
         tmux start-server
         tmux new-session -d -s Streamer -n Signaling -d "/usr/bin/env sh -c \"cd /home/ubuntu/PixelStreamingInfrastructure/SignallingWebServer;./platform_scripts/bash/Start_SignallingServer.sh\""
         tmux new-window -t Streamer:1 -n Streamer "/usr/bin/env sh -c \"cd Linux;./TestApp.sh -pixelstreamingurl=ws://localhost:8888 -pixelstreamingnegotiatecodecs -renderoffscreen\""
-      when: apparchive.changed or infrarepo.changed

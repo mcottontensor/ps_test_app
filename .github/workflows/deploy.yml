@@ -2,6 +2,10 @@ name: Deploy Test App
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Package Test App"]
+    types:
+      - completed
 
 jobs:
   deploy:
@@ -12,6 +16,7 @@ jobs:
       UE_PATH: "D:\\p4\\Release-5.3"
       OUT_PATH: "${{ github.workspace }}\\..\\Output"
       LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: "Checkout GitHub Action - TestApp"
         uses: actions/checkout@v3
