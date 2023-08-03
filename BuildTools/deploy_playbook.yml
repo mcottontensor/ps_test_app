@@ -1,6 +1,6 @@
 ---
 - name: Deploy Streaming App
-  hosts: aws-streamer
+  hosts: aws-streamers
   become: false
   vars:
     archivename: 'deploy.tar.gz'
