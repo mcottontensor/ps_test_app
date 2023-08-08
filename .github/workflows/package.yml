@@ -72,7 +72,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          build-args:
-            - sourcedir=${{ env.OUT_PATH }}/Shipping
+          build-args: sourcedir=${{ env.OUT_PATH }}/Shipping
           push: true
           tags: mcottontensor/pstesting:latest
