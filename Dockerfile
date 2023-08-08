@@ -1,4 +1,4 @@
-FROM adamrehn/ue4-runtime:20.04-cudagl11
+FROM adamrehn/ue4-runtime:22.04-cudagl12
 
 COPY --chown=ue4:ue4 packed/Linux /opt/ue5/testing
 RUN chmod +x /opt/ue5/testing/TestApp.sh
