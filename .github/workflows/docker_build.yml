@@ -25,6 +25,9 @@ jobs:
           latest: true
           tarBall: true
           zipBall: false
+      - run: |
+          rm -rf release
+          mkdir release
       - name: Extract files
         uses: a7ul/tar-action@v1.1.0
         id: extract
