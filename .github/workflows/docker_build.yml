@@ -3,7 +3,7 @@ name: Build Test App Docker Image
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Package Test App"]
+    workflows: ["Build and Release Test App"]
     types:
       - completed
 
@@ -46,4 +46,6 @@ jobs:
           context: .
           build-args: sourcedir=release/Linux
           push: true
-          tags: mcottontensor/pstesting:latest
+          tags: |
+            mcottontensor/pstesting:${{ env.UE_VERSION }}
+            mcottontensor/pstesting:latest

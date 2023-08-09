@@ -28,3 +28,4 @@ jobs:
           options: |
             -u ubuntu
             -e @secrets.enc
+            --extra-vars "ue_version=${{ env.UE_VERSION }}"

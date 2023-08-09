@@ -29,14 +29,15 @@
         definition:
           version: '2'
           services:
-            turnserver:
-              image: "coturn/coturn:4.5.2"
-              init: true
-              network_mode: "host"
-              command: ["-a", "-v", "-n", "-u", "user:password", "-p", "3478", "-r", "default-realm", "--no-dtls", "--no-tls"]
+            # AWS ubuntu seems to already have a turn server running
+            # turnserver:
+            #   image: "coturn/coturn:4.5.2"
+            #   init: true
+            #   network_mode: "host"
+            #   command: ["-a", "-v", "-n", "-u", "user:password", "-p", "3478", "-r", "default-realm", "--no-dtls", "--no-tls"]
             
             signalling:
-              image: "ghcr.io/epicgames/pixel-streaming-signalling-server:5.2"
+              image: "ghcr.io/epicgames/pixel-streaming-signalling-server:{{ ue_version }}"
               init: true
               network_mode: "host"
               command:
@@ -48,9 +49,7 @@
                           "urls": ["stun:stun.l.google.com:19302"]
                         },
                         {
-                          "urls": ["turn:{{ ip_result.stdout }}:3478"],
-                          "username": "user",
-                          "credential": "password"
+                          "urls": ["turn:{{ ip_result.stdout }}:3478"]
                         }
                       ]
                     }
@@ -58,7 +57,7 @@
                 - turnserver
             
             project:
-              image: "mcottontensor/pstesting:1.0"
+              image: "mcottontensor/pstesting:{{ ue_version }}"
               network_mode: "host"
               command: ["-RenderOffscreen", "-Windowed", "-ForceRes", "-ResX=1920", "-ResY=1080", "-PixelStreamingIP=127.0.0.1", "-PixelStreamingPort=8888"]
               
