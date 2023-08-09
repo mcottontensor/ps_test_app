@@ -11,10 +11,10 @@ jobs:
   package:
     permissions: write-all
     runs-on: [self-hosted, aws, Linux]
+    environment: main
     env:
       UE_PATH: "/opt/UnrealEngine"
       OUT_PATH: "${{ github.workspace }}/../Output"
-      LOG_PATH: "${{ github.workspace }}/../UELOGS"
     steps:
       - name: "Checkout GitHub Action - TestApp"
         uses: actions/checkout@v3
