@@ -30,9 +30,8 @@ jobs:
         id: extract
         with:
           command: x
-          cwd: ${{ github.workspace }}
-          files: ${{ fromJson(steps.download.outputs.downloaded_files)[0] }}
           cwd: ./release
+          files: ${{ fromJson(steps.download.outputs.downloaded_files)[0] }}
       - name: Hell
         run: ls -l ${{ github.workspace }}
       - name: Login to Docker Hub
