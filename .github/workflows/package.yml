@@ -13,8 +13,8 @@ jobs:
     runs-on: [self-hosted, aws, Linux]
     env:
       UE_PATH: "/opt/UnrealEngine"
-      OUT_PATH: "${{ github.workspace }}\\..\\Output"
-      LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
+      OUT_PATH: "${{ github.workspace }}/../Output"
+      LOG_PATH: "${{ github.workspace }}/../UELOGS"
     steps:
       - name: "Checkout GitHub Action - TestApp"
         uses: actions/checkout@v3
@@ -29,14 +29,14 @@ jobs:
           awk -F "=" '/ProjectVersion/ {print $2}' Config/DefaultGame.ini >> $env:GITHUB_OUTPUT
       - name: "Build TestApp Shipping"
         run: >
-          ${{ env.UE_PATH }}\Engine\Build\BatchFiles\RunUAT.sh
+          ${{ env.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
-          -project="${{ github.workspace }}\TestApp.uproject"
+          -project="${{ github.workspace }}/TestApp.uproject"
           -build
           -cook
           -stage
           -archive
-          -archivedirectory="${{ env.OUT_PATH }}\\Shipping"
+          -archivedirectory="${{ env.OUT_PATH }}/Shipping"
           -package
           -pak
           -targetplatform=Linux
