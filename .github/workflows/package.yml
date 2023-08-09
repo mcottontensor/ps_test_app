@@ -10,10 +10,9 @@ on:
 jobs:
   package:
     permissions: write-all
-    runs-on: [self-hosted, windows, aws]
-    environment: dev
+    runs-on: [self-hosted, aws, Linux]
     env:
-      UE_PATH: "C:\\Program Files\\Epic Games\\UE_5.2"
+      UE_PATH: "/opt/UnrealEngine"
       OUT_PATH: "${{ github.workspace }}\\..\\Output"
       LOG_PATH: "${{ github.workspace }}\\..\\UELOGS"
     steps:
@@ -27,12 +26,10 @@ jobs:
       - name: Read the project version
         id: getversion
         run: |
-          echo "version=$(BuildTools\GetProjectVersion.ps1)" >> $env:GITHUB_OUTPUT
+          awk -F "=" '/ProjectVersion/ {print $2}' Config/DefaultGame.ini >> $env:GITHUB_OUTPUT
       - name: "Build TestApp Shipping"
         run: >
-          cmd /c 'set uebp_EngineSavedFolder=${{ env.LOG_PATH }}&&
-          set uebp_LogFolder=${{ env.LOG_PATH }}&&
-          "${{ env.UE_PATH }}\Engine\Build\BatchFiles\RunUAT.bat"
+          ${{ env.UE_PATH }}\Engine\Build\BatchFiles\RunUAT.sh
           BuildCookRun
           -project="${{ github.workspace }}\TestApp.uproject"
           -build
@@ -46,7 +43,7 @@ jobs:
           -target=TestApp
           -clientconfig=Shipping
           -nodebuginfo
-          -nop4'
+          -nop4
       - name: Archive Shipping build
         uses: a7ul/tar-action@v1.1.0
         with:
@@ -62,14 +59,3 @@ jobs:
           artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          build-args: sourcedir=${{ env.OUT_PATH }}/Shipping/Linux
-          push: true
-          tags: mcottontensor/pstesting:latest
