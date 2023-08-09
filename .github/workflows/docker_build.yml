@@ -32,7 +32,7 @@ jobs:
           command: x
           cwd: ${{ github.workspace }}
           files: ${{ fromJson(steps.download.outputs.downloaded_files)[0] }}
-          outPath: release
+          cwd: ./release
       - name: Hell
         run: ls -l ${{ github.workspace }}
       - name: Login to Docker Hub
