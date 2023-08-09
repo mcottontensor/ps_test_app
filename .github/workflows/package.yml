@@ -26,7 +26,7 @@ jobs:
       - name: Read the project version
         id: getversion
         run: |
-          awk -F "=" '/ProjectVersion/ {print $2}' Config/DefaultGame.ini >> $GITHUB_OUTPUT
+          echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
       - name: "Build TestApp Shipping"
         run: >
           ${{ env.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
