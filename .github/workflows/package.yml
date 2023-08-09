@@ -22,7 +22,7 @@ jobs:
           clean: "false"
       - name: "Remove existing artifacts"
         run: |
-          if (Test-Path ${{ env.OUT_PATH }}) { Remove-Item -Recurse -Force ${{ env.OUT_PATH }} }
+          rm -rf ${{ env.OUT_PATH }}
       - name: Read the project version
         id: getversion
         run: |
