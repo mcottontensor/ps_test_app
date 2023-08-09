@@ -3,7 +3,7 @@ name: Deploy Test App
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["_Disabled_ Package Test App"]
+    workflows: ["Build Test App Docker Image"]
     types:
       - completed
 
@@ -17,27 +17,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           clean: "false"
-      - name: Download Latest Release
-        id: download
-        uses: robinraju/release-downloader@v1.8
-        with: 
-          filename: "*"
-          latest: true
-          tarBall: true
-          zipBall: false
-      - name: Rename deploy asset
-        run: mv ${{ fromJson(steps.download.outputs.downloaded_files)[0] }} deploy.tar.gz
       - name: Run deploy playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
-          playbook: 'deploy_playbook.yml'
-          # Optional, directory where playbooks live
           directory: 'BuildTools/'
-          # Optional, SSH private key
+          playbook: 'deploy_playbook.yml'
+          vault_password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
           key: ${{secrets.DEPLOY_SSH_PRIVATE_KEY}}
-          # Optional, literal inventory file contents
           inventory: ${{secrets.DEPLOY_INVENTORY}}
-          # Optional, additional flags to pass to ansible-playbook
           options: |
-            --u ubuntu
+            -u ubuntu
+            -e @secrets.enc

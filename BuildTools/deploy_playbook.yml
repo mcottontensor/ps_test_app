@@ -1,43 +1,62 @@
 ---
 - name: Deploy Streaming App
   hosts: aws-streamers
-  become: false
-  vars:
-    archivename: 'deploy.tar.gz'
+  become: true
   tasks: 
-    - name: Copy Application
-      copy:
-        src: '../{{ archivename }}'
-        dest: '/home/ubuntu/'
-      register: apparchive
-    - name: Remove old version
-      file:
-        path: '/home/ubuntu/Linux'
-        state: absent
-      when: apparchive.changed
-    - name: Extract Application
-      unarchive:
-        src: '/home/ubuntu/{{ archivename }}'
-        dest: '/home/ubuntu/'
-        remote_src: true
-      when: apparchive.changed
-    - name: Make startup script executable
-      file:
-        path: '/home/ubuntu/Linux/TestApp.sh'
-        mode: '0775'
-        owner: ubuntu
-        group: ubuntu
-      when: apparchive.changed
-    - name: Fetch PixelStreamingInfrastructure
-      git:
-        repo: 'https://github.com/EpicGames/PixelStreamingInfrastructure.git'
-        dest: '/home/ubuntu/PixelStreamingInfrastructure'
-        version: UE5.3
-        force: true
-      register: infrarepo
-    - name: Start signaling and streamer in tmux for usability
-      shell: |
-        tmux kill-session -t Streamer
-        tmux start-server
-        tmux new-session -d -s Streamer -n Signaling -d "/usr/bin/env sh -c \"cd /home/ubuntu/PixelStreamingInfrastructure/SignallingWebServer;./platform_scripts/bash/Start_SignallingServer.sh\""
-        tmux new-window -t Streamer:1 -n Streamer "/usr/bin/env sh -c \"cd Linux;./TestApp.sh -pixelstreamingurl=ws://localhost:8888 -pixelstreamingnegotiatecodecs -renderoffscreen\""
+    - name: Gather ip
+      shell: curl -s 'https://api.ipify.org'
+      register: ip_result
+    - name: Log into DockerHub
+      docker_login:
+        registry_url: ghcr.io
+        username: mcottontensor
+        password: "{{ ghcr_token }}"
+    - name: Start container with GPUs
+      community.docker.docker_compose:
+        project_name: psstreaming
+        definition:
+          version: '2'
+          services:
+            turnserver:
+              image: "coturn/coturn:4.5.2"
+              init: true
+              network_mode: "host"
+              command: ["-a", "-v", "-n", "-u", "user:password", "-p", "3478", "-r", "default-realm", "--no-dtls", "--no-tls"]
+            
+            signalling:
+              image: "ghcr.io/epicgames/pixel-streaming-signalling-server:5.2"
+              init: true
+              network_mode: "host"
+              command:
+                - "--publicIp={{ ip_result.stdout }}"
+                - >-
+                  --peerConnectionOptions={
+                      "iceServers":[
+                        {
+                          "urls": ["stun:stun.l.google.com:19302"]
+                        },
+                        {
+                          "urls": ["turn:{{ ip_result.stdout }}:3478"],
+                          "username": "user",
+                          "credential": "password"
+                        }
+                      ]
+                    }
+              depends_on:
+                - turnserver
+            
+            project:
+              image: "mcottontensor/pstesting:1.0"
+              network_mode: "host"
+              command: ["-RenderOffscreen", "-Windowed", "-ForceRes", "-ResX=1920", "-ResY=1080", "-PixelStreamingIP=127.0.0.1", "-PixelStreamingPort=8888"]
+              
+              depends_on:
+                - signalling
+              
+              deploy:
+                resources:
+                  reservations:
+                    devices:
+                    - driver: nvidia
+                      capabilities: [gpu]
+                      count: 1
