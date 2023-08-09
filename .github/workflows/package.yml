@@ -22,21 +22,21 @@ jobs:
           clean: "false"
       - name: "Remove existing artifacts"
         run: |
-          rm -rf ${{ OUT_PATH }}
+          rm -rf ${{ env.OUT_PATH }}
       - name: Read the project version
         id: getversion
         run: |
           awk -F "=" '/ProjectVersion/ {print $2}' Config/DefaultGame.ini >> $GITHUB_OUTPUT
       - name: "Build TestApp Shipping"
         run: >
-          ${{ UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
+          ${{ env.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
           -project="${{ github.workspace }}/TestApp.uproject"
           -build
           -cook
           -stage
           -archive
-          -archivedirectory="${{ OUT_PATH }}/Shipping"
+          -archivedirectory="${{ env.OUT_PATH }}/Shipping"
           -package
           -pak
           -targetplatform=Linux
@@ -48,14 +48,14 @@ jobs:
         uses: a7ul/tar-action@v1.1.0
         with:
           command: c
-          cwd: '${{ OUT_PATH }}/Shipping'
+          cwd: '${{ env.OUT_PATH }}/Shipping'
           files: |
             Linux
-          outPath: '${{ OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
+          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
           tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}"
-          artifacts: "${{ OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
+          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
