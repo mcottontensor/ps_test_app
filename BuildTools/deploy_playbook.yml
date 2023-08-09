@@ -11,6 +11,10 @@
         registry_url: ghcr.io
         username: mcottontensor
         password: "{{ ghcr_token }}"
+    - name: Tear down existing services
+      community.docker.docker_compose:
+        project_src: psstreaming
+        state: absent
     - name: Start container with GPUs
       community.docker.docker_compose:
         project_name: psstreaming
