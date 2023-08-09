@@ -32,6 +32,7 @@ jobs:
           command: x
           cwd: ${{ github.workspace }}
           files: ${{ fromJson(steps.download.outputs.downloaded_files)[0] }}
+          outPath: release
       - name: Hell
         run: ls -l ${{ github.workspace }}
       - name: Login to Docker Hub
@@ -43,6 +44,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          build-args: sourcedir=Linux
+          build-args: sourcedir=release/Linux
           push: true
           tags: mcottontensor/pstesting:latest
