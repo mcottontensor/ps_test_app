@@ -51,7 +51,7 @@
                         {
                           "urls": ["turn:{{ ip_result.stdout }}:3478"],
                           "username": "user",
-                          "password": "password"
+                          "credential": "password"
                         }
                       ]
                     }
