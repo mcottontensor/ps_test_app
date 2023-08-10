@@ -19,10 +19,10 @@
       docker_container:
         name: psstreaming_signalling_1
         state: absent
-    - name: Remove existing coturn container
-      docker_container:
-        name: psstreaming_coturn_1
-        state: absent
+    # - name: Remove existing coturn container
+    #   docker_container:
+    #     name: psstreaming_coturn_1
+    #     state: absent
     - name: Start container with GPUs
       community.docker.docker_compose:
         project_name: psstreaming
@@ -53,8 +53,8 @@
                         }
                       ]
                     }
-              depends_on:
-                - turnserver
+              # depends_on:
+              #   - turnserver
             
             project:
               image: "mcottontensor/pstesting:{{ ue_version }}"
