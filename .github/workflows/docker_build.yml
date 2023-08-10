@@ -48,5 +48,5 @@ jobs:
           build-args: sourcedir=release/Linux
           push: true
           tags: |
-            mcottontensor/pstesting:${{ env.UE_VERSION }}
+            mcottontensor/pstesting:${{ vars.UE_VERSION }}
             mcottontensor/pstesting:latest
