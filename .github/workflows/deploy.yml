@@ -29,4 +29,4 @@ jobs:
           options: |
             -u ubuntu
             -e @secrets.enc
-            --extra-vars "ue_version=${{ vars.UE_VERSION }}"
+            --extra-vars "app_image_url=${{ vars.APP_IMAGE_URL }} signalling_image_url=${{ vars.SIGNALLING_IMAGE_URL }}"
