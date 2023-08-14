@@ -24,8 +24,8 @@ jobs:
           directory: 'BuildTools/'
           playbook: 'deploy_playbook.yml'
           vault_password: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
-          key: ${{secrets.DEPLOY_SSH_PRIVATE_KEY}}
-          inventory: ${{secrets.DEPLOY_INVENTORY}}
+          key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          inventory: ${{ vars.DEPLOY_INVENTORY }}
           options: |
             -u ubuntu
             -e @secrets.enc
