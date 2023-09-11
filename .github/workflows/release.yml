@@ -13,7 +13,6 @@ jobs:
     runs-on: [self-hosted, aws, Linux]
     environment: main
     env:
-      UE_PATH: "/opt/UnrealEngine"
       OUT_PATH: "${{ github.workspace }}/../Output"
     steps:
       - name: "Checkout GitHub Action - TestApp"
@@ -29,7 +28,7 @@ jobs:
           echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
       - name: "Build TestApp Shipping"
         run: >
-          ${{ env.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
+          ${{ vars.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
           -project="${{ github.workspace }}/TestApp.uproject"
           -build
