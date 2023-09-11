@@ -10,7 +10,7 @@
       docker_login:
         registry_url: ghcr.io
         username: mcottontensor
-        password: "{{ ghcr_token }}"
+        password: "{{ gh_api_key }}"
     - name: Remove existing streamer container
       docker_container:
         name: psstreaming_project_1
@@ -42,19 +42,19 @@
               network_mode: "host"
               command:
                 - "--publicIp={{ ip_result.stdout }}"
-                - >-
-                  --peerConnectionOptions={
-                      "iceServers":[
-                        {
-                          "urls": ["stun:stun.l.google.com:19302"]
-                        },
-                        {
-                          "urls": ["turn:{{ ip_result.stdout }}:3478"],
-                          "username": "user",
-                          "credential": "password"
-                        }
-                      ]
-                    }
+                # - >-
+                #   --peerConnectionOptions={
+                #       "iceServers":[
+                #         {
+                #           "urls": ["stun:stun.l.google.com:19302"]
+                #         },
+                #         {
+                #           "urls": ["turn:{{ ip_result.stdout }}:3478"],
+                #           "username": "user",
+                #           "credential": "password"
+                #         }
+                #       ]
+                #     }
               # depends_on:
               #   - turnserver
             
