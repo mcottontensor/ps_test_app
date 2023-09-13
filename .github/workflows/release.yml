@@ -26,7 +26,7 @@ jobs:
         id: getversion
         run: |
           echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
-      - name: "Build TestApp Shipping"
+      - name: "Build TestApp ${{ vars.BUILD_CONFIG }}"
         run: >
           ${{ vars.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
@@ -35,19 +35,19 @@ jobs:
           -cook
           -stage
           -archive
-          -archivedirectory="${{ env.OUT_PATH }}/Shipping"
+          -archivedirectory="${{ env.OUT_PATH }}/${{ vars.BUILD_CONFIG }}"
           -package
           -pak
           -targetplatform=Linux
           -target=TestApp
-          -clientconfig=Shipping
+          -clientconfig=${{ vars.BUILD_CONFIG }}
           -nodebuginfo
           -nop4
-      - name: Archive Shipping build
+      - name: Archive ${{ vars.BUILD_CONFIG }} build
         uses: a7ul/tar-action@v1.1.0
         with:
           command: c
-          cwd: '${{ env.OUT_PATH }}/Shipping'
+          cwd: '${{ env.OUT_PATH }}/${{ vars.BUILD_CONFIG }}'
           files: |
             Linux
           outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-Linux.tar.gz'
