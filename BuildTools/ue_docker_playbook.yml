@@ -118,3 +118,8 @@
         state: restarted
         name: docker
       when: dockerinstall.changed
+    - name: Install python packages for docker
+      ansible.builtin.pip:
+        name:
+          - docker
+          - docker-compose

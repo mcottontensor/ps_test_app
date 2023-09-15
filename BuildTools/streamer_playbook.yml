@@ -29,7 +29,7 @@
     - name: Install AWS CLI
       command: "{{ aws_cli_step.dest }}/aws/install"
       args:
-        creates: /usr/bin/aws
+        creates: /usr/local/bin/aws
       when: aws_cli_step.changed
       register: aws_cli_install_step
     - name: Update packages
