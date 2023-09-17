@@ -26,9 +26,9 @@
     - name: Start container with GPUs
       community.docker.docker_compose:
         project_name: psstreaming
+        remove_orphans: true
         definition:
           version: '2'
-          remove_orphans: true
           services:
             # AWS ubuntu seems to already have a turn server running
             # turnserver:
