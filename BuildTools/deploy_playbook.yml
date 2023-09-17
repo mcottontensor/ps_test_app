@@ -28,6 +28,7 @@
         project_name: psstreaming
         definition:
           version: '2'
+          remove_orphans: true
           services:
             # AWS ubuntu seems to already have a turn server running
             # turnserver:
