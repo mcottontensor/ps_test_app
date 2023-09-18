@@ -1,0 +1,72 @@
+{
+	"folders": [
+		{
+			"name": "Engine/VerseTestNativeCmd",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Source\\Programs\\Solaris\\VerseTestNativeCmd\\Verse"
+		},
+		{
+			"name": "Engine/VerseTestScriptCmd",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Source\\Programs\\Solaris\\VerseTestScriptCmd\\Verse"
+		},
+		{
+			"name": "EpicGamesEngine/EpicGamesEngine",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngine\\Source\\EpicGamesEngine\\Verse"
+		},
+		{
+			"name": "EpicGamesEngineEditor/EpicGamesEngineEditor",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngineEditor\\Source\\EpicGamesEngineEditor\\Verse"
+		},
+		{
+			"name": "Solaris/SolarisInterop",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Solaris\\Source\\SolarisInterop\\Verse"
+		},
+		{
+			"name": "Solaris/Templates",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Solaris\\ScriptTemplates"
+		},
+		{
+			"name": "Verse/Verse",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\Verse\\Source\\Verse\\Verse"
+		},
+		{
+			"name": "Verse_Core/Verse_Core",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\Verse_Core\\Source\\Verse_Core\\Verse"
+		},
+		{
+			"name": "VerseCore/Templates",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\VerseCore\\ScriptTemplates"
+		},
+		{
+			"name": "VerseCore/VerseCore",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\VerseCore\\Source\\VerseCore\\Verse"
+		},
+		{
+			"name": "VerseEngine/VerseEngine",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngine\\Source\\VerseEngine\\Verse"
+		},
+		{
+			"name": "VerseEngineRestricted/VerseEngineRestricted",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngineRestricted\\Source\\VerseEngineRestricted\\Verse"
+		},
+		{
+			"name": "VerseGameplay/VerseGameplay",
+			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseGameplay\\Source\\VerseGameplay\\Verse"
+		},
+		{
+			"name": "vproject",
+			"path": "E:\\Development\\UnrealProjects\\PSTestStreamer\\Intermediate\\ProjectFiles\\Verse\\All"
+		}
+	],
+	"launch": 
+	{
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Verse Debug",
+				"type": "verse",
+				"request": "attach",
+				"debugServer": 1961
+			}
+		]
+	}
+}
