@@ -7,6 +7,11 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+env:
+  OUT_PATH: "${{ github.workspace }}/../Output"
+  PROJECT_FILE: "PSTestStreamer.uproject"
+  PROJECT_NAME: "PSTestStreamer"
+
 jobs:
   package-development:
     permissions: write-all
@@ -14,7 +19,6 @@ jobs:
     environment: main
     env:
       CONFIG: "Development"
-      OUT_PATH: "${{ github.workspace }}/../Output"
     steps:
       - name: "Checkout GitHub Action - TestApp"
         uses: actions/checkout@v3
@@ -31,7 +35,7 @@ jobs:
         run: >
           ${{ vars.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
-          -project="${{ github.workspace }}/PSTestStreamer.uproject"
+          -project="${{ github.workspace }}/${{ env.PROJECT_FILE }}"
           -build
           -cook
           -stage
@@ -40,7 +44,7 @@ jobs:
           -package
           -pak
           -targetplatform=Linux
-          -target=TestApp
+          -target=${{ env.PROJECT_NAME }}
           -clientconfig=${{ env.CONFIG }}
           -nodebuginfo
           -nop4
@@ -65,7 +69,6 @@ jobs:
     environment: main
     env:
       CONFIG: "Shipping"
-      OUT_PATH: "${{ github.workspace }}/../Output"
     steps:
       - name: "Checkout GitHub Action - TestApp"
         uses: actions/checkout@v3
@@ -82,7 +85,7 @@ jobs:
         run: >
           ${{ vars.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
-          -project="${{ github.workspace }}/PSTestStreamer.uproject"
+          -project="${{ github.workspace }}/${{ env.PROJECT_FILE }}"
           -build
           -cook
           -stage
@@ -91,7 +94,7 @@ jobs:
           -package
           -pak
           -targetplatform=Linux
-          -target=TestApp
+          -target=${{ env.PROJECT_NAME }}
           -clientconfig=${{ env.CONFIG }}
           -nodebuginfo
           -nop4
