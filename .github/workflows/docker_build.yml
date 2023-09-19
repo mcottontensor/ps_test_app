@@ -8,7 +8,7 @@ on:
       - completed
 
 env:
-  CONTAINER_TAG: 5.0
+  CONTAINER_TAG: "5.0"
 
 jobs:
   docker-build-development:
