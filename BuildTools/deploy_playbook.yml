@@ -64,7 +64,7 @@
             project:
               image: "{{ app_image_url }}"
               network_mode: "host"
-              command: ["-RenderOffscreen", "-Windowed", "-ForceRes", "-ResX=1920", "-ResY=1080", "-PixelStreamingIP=127.0.0.1", "-PixelStreamingPort=8888"]
+              command: ["-RenderOffscreen", "-Windowed", "-ForceRes", "-ResX=1920", "-ResY=1080", "-PixelStreamingURL=ws://localhost:8888", "-PixelStreamingID=testing"]
               
               depends_on:
                 - signalling
