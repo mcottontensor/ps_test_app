@@ -8,11 +8,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  package:
+  package-development:
     permissions: write-all
     runs-on: [self-hosted, aws, Linux]
     environment: main
     env:
+      CONFIG: "Development"
       OUT_PATH: "${{ github.workspace }}/../Output"
     steps:
       - name: "Checkout GitHub Action - TestApp"
@@ -26,35 +27,86 @@ jobs:
         id: getversion
         run: |
           echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
-      - name: "Build TestApp ${{ vars.BUILD_CONFIG }}"
+      - name: "Build TestApp ${{ env.CONFIG }}"
         run: >
           ${{ vars.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
           BuildCookRun
-          -project="${{ github.workspace }}/TestApp.uproject"
+          -project="${{ github.workspace }}/PSTestStreamer.uproject"
           -build
           -cook
           -stage
           -archive
-          -archivedirectory="${{ env.OUT_PATH }}/${{ vars.BUILD_CONFIG }}"
+          -archivedirectory="${{ env.OUT_PATH }}/${{ env.CONFIG }}"
           -package
           -pak
           -targetplatform=Linux
           -target=TestApp
-          -clientconfig=${{ vars.BUILD_CONFIG }}
+          -clientconfig=${{ env.CONFIG }}
           -nodebuginfo
           -nop4
-      - name: Archive ${{ vars.BUILD_CONFIG }} build
+      - name: Archive ${{ env.CONFIG }} build
         uses: a7ul/tar-action@v1.1.0
         with:
           command: c
-          cwd: '${{ env.OUT_PATH }}/${{ vars.BUILD_CONFIG }}'
+          cwd: '${{ env.OUT_PATH }}/${{ env.CONFIG }}'
           files: |
             Linux
-          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ vars.BUILD_CONFIG }}-Linux.tar.gz'
+          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
-          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ vars.BUILD_CONFIG }}"
-          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ vars.BUILD_CONFIG }}-Linux.tar.gz"
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true
+  package-shipping:
+    permissions: write-all
+    runs-on: [self-hosted, aws, Linux]
+    environment: main
+    env:
+      CONFIG: "Shipping"
+      OUT_PATH: "${{ github.workspace }}/../Output"
+    steps:
+      - name: "Checkout GitHub Action - TestApp"
+        uses: actions/checkout@v3
+        with:
+          clean: "false"
+      - name: "Remove existing artifacts"
+        run: |
+          rm -rf ${{ env.OUT_PATH }}
+      - name: Read the project version
+        id: getversion
+        run: |
+          echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
+      - name: "Build TestApp ${{ env.CONFIG }}"
+        run: >
+          ${{ vars.UE_PATH }}/Engine/Build/BatchFiles/RunUAT.sh
+          BuildCookRun
+          -project="${{ github.workspace }}/PSTestStreamer.uproject"
+          -build
+          -cook
+          -stage
+          -archive
+          -archivedirectory="${{ env.OUT_PATH }}/${{ env.CONFIG }}"
+          -package
+          -pak
+          -targetplatform=Linux
+          -target=TestApp
+          -clientconfig=${{ env.CONFIG }}
+          -nodebuginfo
+          -nop4
+      - name: Archive ${{ env.CONFIG }} build
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: '${{ env.OUT_PATH }}/${{ env.CONFIG }}'
+          files: |
+            Linux
+          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true

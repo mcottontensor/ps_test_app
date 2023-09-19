@@ -1,8 +1,8 @@
+.vs
+.vsconfig
 /Binaries
 /Build
 /Intermediate
+/packaged
 /Samples
 /Saved
-.vs
-.vsconfig
-

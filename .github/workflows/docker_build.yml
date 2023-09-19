@@ -7,6 +7,9 @@ on:
     types:
       - completed
 
+env:
+  CONTAINER_TAG: 5.0
+
 jobs:
   build:
     permissions: write-all
@@ -48,5 +51,5 @@ jobs:
           build-args: sourcedir=release/Linux
           push: true
           tags: |
-            mcottontensor/pstesting:${{ vars.UE_VERSION }}
+            mcottontensor/pstesting:${{ env.CONTAINER_TAG }}
             mcottontensor/pstesting:latest
