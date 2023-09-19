@@ -8,8 +8,8 @@ on:
       - completed
 
 env:
-  DEPLOY_SIGNALLING_URL: "mcottontensor/ps_test_signalling:5.0"
-  DEPLOY_APP_URL: "mcottontensor/pstesting:5.0-Shipping"
+  DEPLOY_SIGNALLING_URL: "mcottontensor/ps_test_signalling:5.1"
+  DEPLOY_APP_URL: "mcottontensor/pstesting:5.1-Shipping"
 
 jobs:
   deploy:

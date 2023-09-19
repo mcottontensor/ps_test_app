@@ -11,7 +11,7 @@ env:
   OUT_PATH: "${{ github.workspace }}/../Output"
   PROJECT_FILE: "PSTestStreamer.uproject"
   PROJECT_NAME: "PSTestStreamer"
-  ENGINE_VERSION: "5.0"
+  ENGINE_VERSION: "5.1"
 
 jobs:
   package-development:

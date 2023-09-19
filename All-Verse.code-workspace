@@ -2,59 +2,103 @@
 	"folders": [
 		{
 			"name": "Engine/VerseTestNativeCmd",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Source\\Programs\\Solaris\\VerseTestNativeCmd\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Source\\Programs\\Solaris\\VerseTestNativeCmd\\Verse"
 		},
 		{
 			"name": "Engine/VerseTestScriptCmd",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Source\\Programs\\Solaris\\VerseTestScriptCmd\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Source\\Programs\\Solaris\\VerseTestScriptCmd\\Verse"
 		},
 		{
 			"name": "EpicGamesEngine/EpicGamesEngine",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngine\\Source\\EpicGamesEngine\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngine\\Source\\EpicGamesEngine\\Verse"
 		},
 		{
 			"name": "EpicGamesEngineEditor/EpicGamesEngineEditor",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngineEditor\\Source\\EpicGamesEngineEditor\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngineEditor\\Source\\EpicGamesEngineEditor\\Verse"
 		},
 		{
-			"name": "Solaris/SolarisInterop",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Solaris\\Source\\SolarisInterop\\Verse"
+			"name": "EpicGamesEngineRestricted/EpicGamesEngineRestricted",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesEngineRestricted\\Source\\EpicGamesEngineRestricted\\Verse"
+		},
+		{
+			"name": "EpicGamesSimulation/EpicGamesSimulation",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesSimulation\\Source\\EpicGamesSimulation\\Verse"
+		},
+		{
+			"name": "EpicGamesTemporary/EpicGamesTemporary",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\EpicGamesTemporary\\Source\\EpicGamesTemporary\\Verse"
 		},
 		{
 			"name": "Solaris/Templates",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Solaris\\ScriptTemplates"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Solaris\\ScriptTemplates"
+		},
+		{
+			"name": "Solaris/VerseNative",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Solaris\\Source\\VerseNative\\Verse"
+		},
+		{
+			"name": "UnrealEngineExperimental/UnrealEngineExperimental",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\UnrealEngineExperimental\\Source\\UnrealEngineExperimental\\Verse"
+		},
+		{
+			"name": "VGameplayRst/Templates",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VGameplayRst\\ScriptTemplates"
+		},
+		{
+			"name": "VGameplayRst/VGameplayRst",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VGameplayRst\\Source\\VGameplayRst\\Verse"
 		},
 		{
 			"name": "Verse/Verse",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\Verse\\Source\\Verse\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\Verse\\Source\\Verse\\Verse"
 		},
 		{
-			"name": "Verse_Core/Verse_Core",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\Verse_Core\\Source\\Verse_Core\\Verse"
-		},
-		{
-			"name": "VerseCore/Templates",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\VerseCore\\ScriptTemplates"
-		},
-		{
-			"name": "VerseCore/VerseCore",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\VerseCore\\Source\\VerseCore\\Verse"
+			"name": "VerseEngine/VerseAssets",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngine\\Source\\VerseAssets\\Verse"
 		},
 		{
 			"name": "VerseEngine/VerseEngine",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngine\\Source\\VerseEngine\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngine\\Source\\VerseEngine\\Verse"
 		},
 		{
 			"name": "VerseEngineRestricted/VerseEngineRestricted",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngineRestricted\\Source\\VerseEngineRestricted\\Verse"
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseEngineRestricted\\Source\\VerseEngineRestricted\\Verse"
 		},
 		{
-			"name": "VerseGameplay/VerseGameplay",
-			"path": "D:\\p4\\Release-5.0.3\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseGameplay\\Source\\VerseGameplay\\Verse"
+			"name": "VerseExperimental/VerseExperimental",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseExperimental\\Source\\VerseExperimental\\Verse"
+		},
+		{
+			"name": "VerseGameplayTags/VerseGameplayTags",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseGameplayTags\\Source\\VerseGameplayTags\\Verse"
+		},
+		{
+			"name": "VerseMovement/VerseMovement",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseMovement\\Source\\VerseMovement\\Verse"
+		},
+		{
+			"name": "VersePrototypeGameplay",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VersePrototypeGameplay\\Content\\Verse"
+		},
+		{
+			"name": "VerseRestricted/VerseRestricted",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseRestricted\\Source\\VerseRestricted\\Verse"
+		},
+		{
+			"name": "VerseSimulation/VerseSimulation",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseSimulation\\Source\\VerseSimulation\\Verse"
+		},
+		{
+			"name": "VerseSimulationMetadata/VerseSimulationMetadata",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseSimulationMetadata\\Source\\VerseSimulationMetadata\\Verse"
+		},
+		{
+			"name": "VerseUI/VerseUI",
+			"path": "D:\\p4\\Release-5.1\\Engine\\Restricted\\NotForLicensees\\Plugins\\Verse\\VerseUI\\Source\\VerseUI\\Verse"
 		},
 		{
 			"name": "vproject",
-			"path": "E:\\Development\\UnrealProjects\\PSTestStreamer\\Intermediate\\ProjectFiles\\Verse\\All"
+			"path": "E:\\Development\\UnrealProjects\\ps_test_app\\Intermediate\\ProjectFiles\\Verse\\All"
 		}
 	],
 	"launch": 

@@ -8,7 +8,7 @@ on:
       - completed
 
 env:
-  ENGINE_VERSION: "5.0"
+  ENGINE_VERSION: "5.1"
 
 jobs:
   docker-build-development:
