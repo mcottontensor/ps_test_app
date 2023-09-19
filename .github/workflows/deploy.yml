@@ -7,6 +7,10 @@ on:
     types:
       - completed
 
+env:
+  DEPLOY_SIGNALLING_URL: "mcottontensor/ps_test_signalling:5.0"
+  DEPLOY_APP_URL: "mcottontensor/pstesting:5.0-Shipping"
+
 jobs:
   deploy:
     permissions: write-all
@@ -27,4 +31,4 @@ jobs:
           inventory: ${{ vars.DEPLOY_INVENTORY }}
           options: |
             -u ubuntu
-            --extra-vars "gh_api_key=${{ secrets.GH_API_KEY }} app_image_url=${{ vars.DEPLOY_APP_IMAGE_URL }} signalling_image_url=${{ vars.DEPLOY_SIGNALLING_IMAGE_URL }}"
+            --extra-vars "gh_api_key=${{ secrets.GH_API_KEY }} app_image_url=${{ env.DEPLOY_APP_URL }} signalling_image_url=${{ env.DEPLOY_SIGNALLING_URL }}"
