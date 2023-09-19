@@ -30,9 +30,10 @@ jobs:
       - name: Download ${{ env.CONFIG }} Release
         id: download
         uses: robinraju/release-downloader@v1.8
-        with: 
+        with:
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
           filename: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
-          latest: true
+          latest: false
           tarBall: true
           zipBall: false
       - run: |
@@ -78,9 +79,10 @@ jobs:
       - name: Download ${{ env.CONFIG }} Release
         id: download
         uses: robinraju/release-downloader@v1.8
-        with: 
+        with:
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
           filename: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
-          latest: true
+          latest: false
           tarBall: true
           zipBall: false
       - run: |
@@ -107,4 +109,3 @@ jobs:
           tags: |
             mcottontensor/pstesting:${{ env.CONTAINER_TAG }}-${{ env.CONFIG }}
             mcottontensor/pstesting:latest
-            
