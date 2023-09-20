@@ -9,7 +9,7 @@ on:
 
 env:
   DEPLOY_SIGNALLING_URL: "mcottontensor/ps_test_signalling:5.0"
-  DEPLOY_APP_URL: "mcottontensor/pstesting:5.2-Shipping"
+  DEPLOY_APP_URL: "mcottontensor/pstesting:5.3-Shipping"
 
 jobs:
   deploy:
