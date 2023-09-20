@@ -1,0 +1,111 @@
+name: Build and Release Test App
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  PROJECT_FILE: "PSTestStreamer.uproject"
+  ENGINE_VERSION: "5.0"
+
+jobs:
+  package-development:
+    permissions: write-all
+    runs-on: [ubuntu-latest]
+    environment: main
+    env:
+      CONFIG: "Development"
+    steps:
+      - name: "Checkout GitHub Action - TestApp"
+        uses: actions/checkout@v3
+        with:
+          clean: "false"
+      - name: Read the project version
+        id: getversion
+        run: |
+          echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
+      - uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          image: epicgames/unreal-engine:dev-slim-5.0
+          options: -v ${{ github.workspace }}:/project
+          run: >
+            /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh
+            BuildCookRun
+            -utf8output
+            -platform=Linux
+            -clientconfig=${{ env.CONFIG }}
+            -serverconfig=${{ env.CONFIG }}
+            -project="/project/${{ env.PROJECT_FILE }}"
+            -noP4 -nodebuginfo -allmaps
+            -cook -build -stage -prereqs -pak -archive
+            -archivedirectory="/project/packaged/${{ env.CONFIG }}"
+      - name: Archive ${{ env.CONFIG }} build
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
+          files: |
+            Linux
+          outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true
+  package-shipping:
+    permissions: write-all
+    runs-on: [ubuntu-latest]
+    environment: main
+    env:
+      CONFIG: "Shipping"
+    steps:
+      - name: "Checkout GitHub Action - TestApp"
+        uses: actions/checkout@v3
+        with:
+          clean: "false"
+      - name: Read the project version
+        id: getversion
+        run: |
+          echo "version=$(awk -F '=' '/ProjectVersion/ {print $2}' Config/DefaultGame.ini)" >> $GITHUB_OUTPUT
+      - uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registry: ghcr.io
+          image: epicgames/unreal-engine:dev-slim-5.0
+          options: -v ${{ github.workspace }}:/project
+          run: >
+            /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh
+            BuildCookRun
+            -utf8output
+            -platform=Linux
+            -clientconfig=${{ env.CONFIG }}
+            -serverconfig=${{ env.CONFIG }}
+            -project="/project/${{ env.PROJECT_FILE }}"
+            -noP4 -nodebuginfo -allmaps
+            -cook -build -stage -prereqs -pak -archive
+            -archivedirectory="/project/packaged/${{ env.CONFIG }}"
+      - name: Archive ${{ env.CONFIG }} build
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
+          files: |
+            Linux
+          outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true
+          
