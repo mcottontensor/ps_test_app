@@ -2,12 +2,12 @@ name: Build Project, push image and release
 
 on:
   push:
-    branches: [ UE5.0 ]
+    branches: [ UE5.1 ]
   workflow_dispatch:
 
 env:
   PROJECT_FILE: "PSTestStreamer.uproject"
-  ENGINE_VERSION: "5.0"
+  ENGINE_VERSION: "5.1"
 
 jobs:
   package-development:
