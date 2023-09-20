@@ -1,4 +1,4 @@
-name: Build Project in Docker
+name: Build Project, push image and release
 
 on:
   push:
@@ -65,12 +65,12 @@ jobs:
           cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
           files: |
             Linux
-          outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+          outPath: '${{ github.workspace }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
-          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-          artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ github.workspace }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
   package-shipping:
@@ -126,11 +126,11 @@ jobs:
           cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
           files: |
             Linux
-          outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+          outPath: '${{ github.workspace }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
-          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-          artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ github.workspace }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
