@@ -11,6 +11,7 @@ env:
   OUT_PATH: "${{ github.workspace }}/../Output"
   PROJECT_FILE: "PSTestStreamer.uproject"
   PROJECT_NAME: "PSTestStreamer"
+  ENGINE_VERSION: "5.0"
 
 jobs:
   package-development:
@@ -55,12 +56,12 @@ jobs:
           cwd: '${{ env.OUT_PATH }}/${{ env.CONFIG }}'
           files: |
             Linux
-          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+          outPath: '${{ env.OUT_PATH }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
-          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ env.OUT_PATH }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true
   package-shipping:
@@ -105,11 +106,11 @@ jobs:
           cwd: '${{ env.OUT_PATH }}/${{ env.CONFIG }}'
           files: |
             Linux
-          outPath: '${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+          outPath: '${{ env.OUT_PATH }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
       - name: "Make the release"
         uses: ncipollo/release-action@v1
         with:
-          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-          artifacts: "${{ env.OUT_PATH }}/${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ env.OUT_PATH }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           generateReleaseNotes: true
           allowUpdates: true

@@ -8,7 +8,7 @@ on:
       - completed
 
 env:
-  CONTAINER_TAG: "5.0"
+  ENGINE_VERSION: "5.0"
 
 jobs:
   docker-build-development:
@@ -31,8 +31,8 @@ jobs:
         id: download
         uses: robinraju/release-downloader@v1.8
         with:
-          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-          filename: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          filename: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           latest: false
           tarBall: true
           zipBall: false
@@ -58,7 +58,7 @@ jobs:
           build-args: sourcedir=release/Linux
           push: true
           tags: |
-            mcottontensor/pstesting:${{ env.CONTAINER_TAG }}-${{ env.CONFIG }}
+            mcottontensor/pstesting:${{ env.ENGINE_VERSION }}-${{ env.CONFIG }}
 
   docker-build-shipping:
     permissions: write-all
@@ -80,8 +80,8 @@ jobs:
         id: download
         uses: robinraju/release-downloader@v1.8
         with:
-          tag: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-          filename: "${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          filename: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
           latest: false
           tarBall: true
           zipBall: false
@@ -107,5 +107,5 @@ jobs:
           build-args: sourcedir=release/Linux
           push: true
           tags: |
-            mcottontensor/pstesting:${{ env.CONTAINER_TAG }}-${{ env.CONFIG }}
+            mcottontensor/pstesting:${{ env.ENGINE_VERSION }}-${{ env.CONFIG }}
             mcottontensor/pstesting:latest
