@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.GH_API_KEY }}
           registry: ghcr.io
-          image: epicgames/unreal-engine:dev-slim-5.0
+          image: ghcr.io/epicgames/unreal-engine:dev-slim-5.0
           options: -v ${{ github.workspace }}:/project
           run: >
             /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh
@@ -80,7 +80,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.GH_API_KEY }}
           registry: ghcr.io
-          image: epicgames/unreal-engine:dev-slim-5.0
+          image: ghcr.io/epicgames/unreal-engine:dev-slim-5.0
           options: -v ${{ github.workspace }}:/project
           run: >
             /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh
