@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.GH_API_KEY }}
           registry: ghcr.io
-          image: ghcr.io/epicgames/unreal-engine:dev-slim-5.0
+          image: ghcr.io/epicgames/unreal-engine:dev-slim-${{ env.ENGINE_VERSION }}
           options: -v ${{ github.workspace }}:/project
           run: >
             /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh
@@ -45,21 +45,21 @@ jobs:
             -noP4 -nodebuginfo -allmaps
             -cook -build -stage -prereqs -pak -archive
             -archivedirectory="/project/packaged/${{ env.CONFIG }}"
-      # - name: Archive ${{ env.CONFIG }} build
-      #   uses: a7ul/tar-action@v1.1.0
-      #   with:
-      #     command: c
-      #     cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
-      #     files: |
-      #       Linux
-      #     outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
-      # - name: "Make the release"
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-      #     artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
-      #     generateReleaseNotes: true
-      #     allowUpdates: true
+      - name: Archive ${{ env.CONFIG }} build
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
+          files: |
+            Linux
+          outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true
   package-shipping:
     permissions: write-all
     runs-on: [self-hosted, aws, Linux]
@@ -80,7 +80,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.GH_API_KEY }}
           registry: ghcr.io
-          image: ghcr.io/epicgames/unreal-engine:dev-slim-5.0
+          image: ghcr.io/epicgames/unreal-engine:dev-slim-${{ env.ENGINE_VERSION }}
           options: -v ${{ github.workspace }}:/project
           run: >
             /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh
@@ -93,18 +93,18 @@ jobs:
             -noP4 -nodebuginfo -allmaps
             -cook -build -stage -prereqs -pak -archive
             -archivedirectory="/project/packaged/${{ env.CONFIG }}"
-      # - name: Archive ${{ env.CONFIG }} build
-      #   uses: a7ul/tar-action@v1.1.0
-      #   with:
-      #     command: c
-      #     cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
-      #     files: |
-      #       Linux
-      #     outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
-      # - name: "Make the release"
-      #   uses: ncipollo/release-action@v1
-      #   with:
-      #     tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
-      #     artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
-      #     generateReleaseNotes: true
-      #     allowUpdates: true
+      - name: Archive ${{ env.CONFIG }} build
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: '${{ github.workspace }}/packaged/${{ env.CONFIG }}'
+          files: |
+            Linux
+          outPath: '${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz'
+      - name: "Make the release"
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}"
+          artifacts: "${{ github.workspace }}/${{ env.ENGINE_VERSION }}-${{ steps.getversion.outputs.version }}-${{ github.ref_name }}-${{ github.event.repository.name }}-${{ env.CONFIG }}-Linux.tar.gz"
+          generateReleaseNotes: true
+          allowUpdates: true
