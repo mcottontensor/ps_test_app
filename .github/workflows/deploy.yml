@@ -10,6 +10,8 @@ on:
 env:
   DEPLOY_SIGNALLING_IMAGE: "mcottontensor/ps_test_signalling:5.0"
   DEPLOY_APP_IMAGE: "mcottontensor/pstesting:5.3-Shipping"
+  DEPLOY_SIGNALLING_IMAGE_OVERRIDE: ${{ vars.DEPLOY_SIGNALLING_IMAGE_OVERRIDE }}
+  DEPLOY_APP_IMAGE_OVERRIDE: ${{ vars.DEPLOY_APP_IMAGE_OVERRIDE }}
 
 jobs:
   deploy:
@@ -23,9 +25,11 @@ jobs:
         with:
           clean: "false"
       - name: Check signalling image override
+        env:
+
         run: |
-          echo "DEPLOY_SIGNALLING_IMAGE=${vars.DEPLOY_SIGNALLING_IMAGE_OVERRIDE:-$DEPLOY_SIGNALLING_IMAGE}" >> $GITHUB_ENV
-          echo "DEPLOY_APP_IMAGE=${vars.DEPLOY_APP_IMAGE_OVERRIDE:-$DEPLOY_APP_IMAGE}" >> $GITHUB_ENV
+          echo "DEPLOY_SIGNALLING_IMAGE=${DEPLOY_SIGNALLING_IMAGE_OVERRIDE:-$DEPLOY_SIGNALLING_IMAGE}" >> $GITHUB_ENV
+          echo "DEPLOY_APP_IMAGE=${DEPLOY_APP_IMAGE_OVERRIDE:-$DEPLOY_APP_IMAGE}" >> $GITHUB_ENV
       - name: Run deploy playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
