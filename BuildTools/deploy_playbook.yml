@@ -23,7 +23,7 @@
     #   docker_container:
     #     name: psstreaming_coturn_1
     #     state: absent
-    - name: Start container with GPUs
+    - name: Start {{ app_image_url }} and {{ signalling_image_url }} with GPUs
       community.docker.docker_compose:
         project_name: psstreaming
         pull: true
