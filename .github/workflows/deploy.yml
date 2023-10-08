@@ -25,8 +25,6 @@ jobs:
         with:
           clean: "false"
       - name: Check signalling image override
-        env:
-
         run: |
           echo "DEPLOY_SIGNALLING_IMAGE=${DEPLOY_SIGNALLING_IMAGE_OVERRIDE:-$DEPLOY_SIGNALLING_IMAGE}" >> $GITHUB_ENV
           echo "DEPLOY_APP_IMAGE=${DEPLOY_APP_IMAGE_OVERRIDE:-$DEPLOY_APP_IMAGE}" >> $GITHUB_ENV
