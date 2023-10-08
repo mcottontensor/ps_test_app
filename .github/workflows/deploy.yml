@@ -24,8 +24,8 @@ jobs:
           clean: "false"
       - name: Check signalling image override
         run: |
-          echo "DEPLOY_SIGNALLING_IMAGE=${DEPLOY_SIGNALLING_IMAGE_OVERRIDE:-$DEPLOY_SIGNALLING_IMAGE}" >> $GITHUB_ENV
-          echo "DEPLOY_APP_IMAGE=${DEPLOY_APP_IMAGE_OVERRIDE:-$DEPLOY_APP_IMAGE}" >> $GITHUB_ENV
+          echo "DEPLOY_SIGNALLING_IMAGE=${vars.DEPLOY_SIGNALLING_IMAGE_OVERRIDE:-$DEPLOY_SIGNALLING_IMAGE}" >> $GITHUB_ENV
+          echo "DEPLOY_APP_IMAGE=${vars.DEPLOY_APP_IMAGE_OVERRIDE:-$DEPLOY_APP_IMAGE}" >> $GITHUB_ENV
       - name: Run deploy playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
